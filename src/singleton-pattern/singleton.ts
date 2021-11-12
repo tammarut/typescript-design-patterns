@@ -1,5 +1,5 @@
 class FancyLogger {
-  static _instance = new FancyLogger()
+  private static _instance: FancyLogger
   logs = []
   constructor() {
     if (!FancyLogger._instance) {
@@ -19,4 +19,6 @@ class FancyLogger {
 }
 
 const fancyLogger = new FancyLogger()
+const fancyLogger2 = new FancyLogger()
 export default fancyLogger
+export { fancyLogger2 }
