@@ -8,7 +8,7 @@ class FancyLogger {
     return FancyLogger._instance
   }
 
-  log(message: any) {
+  log(message: string) {
     this.logs.push(message)
     console.log(`👉Fancy: ${message}`)
   }
