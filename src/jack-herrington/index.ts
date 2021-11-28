@@ -1,4 +1,4 @@
-// Observer
+// Observer pattern
 type Listener<EventType> = (event: EventType) => void
 type PubSubType<EventType> = {
   publish(event: EventType): void
@@ -59,7 +59,7 @@ export function createDatabase<T extends BaseRecord>() {
     static instance = new InMemoryDatabase()
     private beforeAddListeners = createObserver<BeforeSetEvent<T>>()
     private afterAddListeners = createObserver<AfterSetEvent<T>>()
-    constructor() {}
+    private constructor() {}
 
     set(newValue: T): void {
       this.beforeAddListeners.publish({ newValue, value: this.db[newValue.id] })

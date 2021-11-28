@@ -53,5 +53,11 @@ console.log('Undo last command:', calculator.value)
 
 // const pokemonDB = createDatabase<Pokemon>()
 const PokemonDB = createDatabase<Pokemon>()
+const unsubscribe = PokemonDB.instance.onAfterAdd(({ value }) => {
+  console.log('onAfterAdd:', value)
+})
+
 PokemonDB.instance.set({ id: 'AB', attack: 50, defense: 10 })
-console.log(PokemonDB.instance.get('AB'))
+unsubscribe()
+PokemonDB.instance.set({ id: 'Spino', attack: 100, defense: 20 })
+// console.log(PokemonDB.instance.get('AB'))
