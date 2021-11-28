@@ -2,8 +2,9 @@ import UserBuilder from './builder-pattern/builder'
 import { printUser } from './null-object-pattern/null-object'
 import { logFirstImplementation } from './singleton-pattern/firstUse'
 import { logSecondImplementation } from './singleton-pattern/secondUse'
-import { AddThenMultiplyCommand, Calculator } from './command-pattern/command';
+import { AddThenMultiplyCommand, Calculator } from './command-pattern/command'
 import { getUsers, getUserPosts } from './facade-pattern/facade'
+import { Pokemon, createDatabase } from './jack-herrington'
 
 // 🔥Null Object pattern
 printUser(1)
@@ -23,13 +24,13 @@ logFirstImplementation()
 logSecondImplementation()
 
 // 🔥Facade pattern
-getUsers().then(users => {
-  users.forEach(user => {
+getUsers().then((users) => {
+  users.forEach((user) => {
     console.log(user.name)
-    getUserPosts(user.id).then(posts => {
+    getUserPosts(user.id).then((posts) => {
       console.log(posts.length)
     })
-  });
+  })
 })
 
 // 🔥Command pattern
@@ -49,3 +50,8 @@ calculator.executeCommand(new AddThenMultiplyCommand(10, 2))
 console.log('After Add then multiply:', calculator.value)
 calculator.undo()
 console.log('Undo last command:', calculator.value)
+
+// const pokemonDB = createDatabase<Pokemon>()
+const PokemonDB = createDatabase<Pokemon>()
+PokemonDB.instance.set({ id: 'AB', attack: 50, defense: 10 })
+console.log(PokemonDB.instance.get('AB'))
