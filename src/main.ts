@@ -57,7 +57,15 @@ const unsubscribe = PokemonDB.instance.onAfterAdd(({ value }) => {
   console.log('onAfterAdd:', value)
 })
 
-PokemonDB.instance.set({ id: 'AB', attack: 50, defense: 10 })
+PokemonDB.instance.set({ id: 'Pika', attack: 50, defense: 30 })
 unsubscribe()
 PokemonDB.instance.set({ id: 'Spino', attack: 100, defense: 20 })
 // console.log(PokemonDB.instance.get('AB'))
+PokemonDB.instance.visit((item) => {
+  console.log('visit ⇾', item.id)
+})
+
+const bestDefensive = PokemonDB.instance.selectBest(({ defense }) => defense)
+const bestAttack = PokemonDB.instance.selectBest(({ attack }) => attack)
+console.log(`Best defense = ${bestDefensive?.id}`)
+console.log(`Best attack = ${bestAttack?.id}`)

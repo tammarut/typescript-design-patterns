@@ -48,6 +48,8 @@ interface Database<T extends BaseRecord> {
 
   onBeforeAdd(listener: Listener<BeforeSetEvent<T>>): () => void
   onAfterAdd(listener: Listener<AfterSetEvent<T>>): () => void
+
+  visit(visitor: (item: T) => void): void
 }
 
 // Factory pattern
@@ -77,6 +79,30 @@ export function createDatabase<T extends BaseRecord>() {
 
     onAfterAdd(listener: Listener<AfterSetEvent<T>>): () => void {
       return this.afterAddListeners.subscribe(listener)
+    }
+
+    // Visitor pattern
+    visit(visitor: (item: T) => void): void {
+      Object.values(this.db).forEach(visitor)
+    }
+
+    // Strategy pattern
+    selectBest(scoreStrategy: (item: T) => number): T | undefined {
+      const found: {
+        max: number
+        item: T | undefined
+      } = { max: 0, item: undefined }
+
+      const values = Object.values(this.db)
+      values.reduce((f, item) => {
+        const score = scoreStrategy(item)
+        if (score > f.max) {
+          f.max = score
+          f.item = item
+        }
+        return f
+      }, found)
+      return found.item
     }
   }
 
